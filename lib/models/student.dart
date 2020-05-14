@@ -27,7 +27,7 @@ class Student{
       roll: doc["roll"],
       year: doc["year"],
       workingHour: doc["workingHour"],
-      totalHour: doc["workingHour"],
+      totalHour: doc["totalHour"],
       gmail: doc["gmail"],
       password: doc["password"],
     );
