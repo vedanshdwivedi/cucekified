@@ -37,7 +37,7 @@ class _StudentLoginState extends State<StudentLogin> {
     snapshot.documents.forEach((DocumentSnapshot doc) {
       currentStudent = doc.exists ? Student.fromDocument(doc) : null;
     });
-    if (currentStudent != null && currentStudent.password == p) {
+    if (currentStudent != null && currentStudent.password == p && currentStudent.role == "S") {
       // perform login and load student dashboard
       setState(() {
         isAuth = true;

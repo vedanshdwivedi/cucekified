@@ -36,7 +36,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   gotoFacultyLogin(){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => FacultyLogin()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => TeacherLogin()));
   }
 
   @override
