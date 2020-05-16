@@ -8,8 +8,6 @@ class MarkAttendance extends StatefulWidget {
 class _MarkAttendanceState extends State<MarkAttendance> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
-    );
+    return Text('Mark Attendance');
   }
 }

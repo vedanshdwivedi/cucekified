@@ -1,3 +1,4 @@
+import 'package:cucekified/pages/mark_attendance.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -13,6 +14,9 @@ String year;
 String hour;
 
 class _SetParametersState extends State<SetParameters> {
+
+  final _snackbarKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -148,29 +152,56 @@ class _SetParametersState extends State<SetParameters> {
           "display": "4",
           "value": "4",
         },
+        {
+          "display": "5",
+          "value": "5",
+        },
+        {
+          "display": "6",
+          "value": "6",
+        },
       ],
       textField: 'display',
       valueField: 'value',
     );
   }
 
+
+  handleParameters(){
+    if(date != null && dept != null && year != null && hour != null){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => MarkAttendance()));
+    }else{
+      final snackBar = SnackBar(content: Text('Please fill in all the details before proceeding'));
+      _snackbarKey.currentState.showSnackBar(snackBar);
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _snackbarKey,
       body: ListView(
         children: <Widget>[
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Set the following parameters : "),
+                ),
+              ),
               // Date Picker
               Center(
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 100.0, left: 8.0, right: 8.0, bottom: 8.0),
+                      top: 90.0, left: 8.0, right: 8.0, bottom: 8.0),
                   child: RaisedButton(
                     color: Colors.redAccent,
-                    child: Text('Pick a date'),
+                    child: date == null ? Text('Pick a date') : Text("Selected Date: $date"),
                     onPressed: () {
                       showDatePicker(
                               context: context,
@@ -179,7 +210,10 @@ class _SetParametersState extends State<SetParameters> {
                               lastDate: DateTime(2025))
                           .then((value) {
                         var formatter = new DateFormat('yyyy-MM-dd');
-                        date = formatter.format(value);
+                        setState(() {
+                          date = formatter.format(value);
+                        });
+                        // date = formatter.format(value);
                         print(date);
                       });
                     },
@@ -216,7 +250,7 @@ class _SetParametersState extends State<SetParameters> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: RaisedButton.icon(
-                      onPressed: () => print('Mark'),
+                      onPressed: handleParameters,
                       icon: Icon(Icons.save),
                       label: Text('Mark Attendance')),
                 ),
