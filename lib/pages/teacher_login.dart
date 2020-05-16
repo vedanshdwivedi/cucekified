@@ -59,7 +59,10 @@ class _TeacherLoginState extends State<TeacherLogin> {
   @override
   void initState() {
     super.initState();
-    isAuth = false;
+    if(currentTeacher == null)
+      isAuth = false;
+    else
+      isAuth = true;
     isValidating = false;
   }
 

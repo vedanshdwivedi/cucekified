@@ -10,7 +10,7 @@ import '../models/teacher.dart';
 
 // Import Pages
 
-import 'attendance_mark.dart';
+
 import 'student_dashboard.dart';
 import 'teacher_dashboard.dart';
 import 'teacher_marker.dart';
@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      
+
     );
   }
 }
