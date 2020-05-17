@@ -10,7 +10,7 @@ class SetParameters extends StatefulWidget {
 
 String date;
 String dept;
-String year;
+int year;
 String hour;
 
 class _SetParametersState extends State<SetParameters> {
@@ -84,8 +84,8 @@ class _SetParametersState extends State<SetParameters> {
       value: year,
       onSaved: (value) {
         setState(() {
-          if (dept == "MCA" && value == "4")
-            year = "3";
+          if (dept == "MCA" && value == 4)
+            year = 3;
           else
             year = value;
         });
@@ -99,19 +99,19 @@ class _SetParametersState extends State<SetParameters> {
       dataSource: [
         {
           "display": "1",
-          "value": "1",
+          "value": 1,
         },
         {
           "display": "2",
-          "value": "2",
+          "value": 2,
         },
         {
           "display": "3",
-          "value": "3",
+          "value": 3,
         },
         {
           "display": "4",
-          "value": "4",
+          "value": 4,
         },
       ],
       textField: 'display',
@@ -138,27 +138,27 @@ class _SetParametersState extends State<SetParameters> {
       dataSource: [
         {
           "display": "1",
-          "value": "1",
+          "value": "hour1",
         },
         {
           "display": "2",
-          "value": "2",
+          "value": "hour2",
         },
         {
           "display": "3",
-          "value": "3",
+          "value": "hour3",
         },
         {
           "display": "4",
-          "value": "4",
+          "value": "hour4",
         },
         {
           "display": "5",
-          "value": "5",
+          "value": "hour5",
         },
         {
           "display": "6",
-          "value": "6",
+          "value": "hour6",
         },
       ],
       textField: 'display',

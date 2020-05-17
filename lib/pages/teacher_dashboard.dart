@@ -38,6 +38,11 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
+                child: Center(child: Text('Hello ${currentTeacher.name}')),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Center(
                   child: RaisedButton.icon(
                     onPressed: () {
@@ -46,22 +51,22 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                           MaterialPageRoute(
                               builder: (context) => SetParameters()));
                     },
-                    icon: Icon(Icons.add_alert),
+                    icon: Icon(Icons.access_alarms),
                     label: Text('Mark Attendance'),
                   ),
                 ),
               ),
 
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: Center(
-              //     child: RaisedButton.icon(
-              //       onPressed: () => SetParameters(),
-              //       icon: Icon(Icons.add_alert),
-              //       label: Text('Mark Attendance'),
-              //     ),
-              //   ),
-              // ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: RaisedButton.icon(
+                    onPressed: handleLogout,
+                    icon: Icon(Icons.account_circle),
+                    label: Text('Logout'),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

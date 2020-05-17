@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cucekified/models/attendance.dart';
 
 class Student{
   // name, username, dept, password, gmail, role
-  final String name;
+  final String username;
   final String dept;
   final String gmail;
-  final String role = "S"; 
+  final String role; 
   final String id;
   final String regNo;
   final String roll;
@@ -16,12 +15,12 @@ class Student{
   final String password;
   
 
-  Student({this.id, this.name, this.dept, this.regNo, this.roll, this.year, this.workingHour, this.totalHour,  this.gmail, this.password});
+  Student({this.id, this.username, this.dept, this.regNo, this.roll, this.year, this.workingHour, this.totalHour,  this.gmail, this.password, this.role});
 
   factory Student.fromDocument(DocumentSnapshot doc){
     return Student(
       id: doc.documentID,
-      name: doc["name"],
+      username: doc["username"],
       dept: doc["dept"],
       regNo: doc["regNo"],
       roll: doc["roll"],
@@ -30,6 +29,7 @@ class Student{
       totalHour: doc["totalHour"],
       gmail: doc["gmail"],
       password: doc["password"],
+      role: doc["role"],
     );
   }
 
