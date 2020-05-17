@@ -15,6 +15,7 @@ final GoogleSignIn googleSignIn = GoogleSignIn();
 final studRef = Firestore.instance.collection('students');
 final teacherRef = Firestore.instance.collection('teachers');
 final attRef = Firestore.instance.collection('attendance');
+List absent;
 
 class _MarkAttendanceState extends State<MarkAttendance> {
   String dateFinal;
@@ -46,10 +47,19 @@ class _MarkAttendanceState extends State<MarkAttendance> {
   }
 
   getUserById(String id) async {
-    Student stud;
     DocumentSnapshot snapshot = await studRef.document(id).get();
-    stud = Student.fromDocument(snapshot);
-    print(stud.username);
+    Student stud = Student.fromDocument(snapshot);
+
+    // if roll in absent list then set add 0 to workingHour
+    int add = absent.contains(stud.roll) ? 0 : 1;
+
+    // update data on student profile
+    studRef.document(id).updateData({
+      'workingHour' : stud.workingHour + add,
+      'totalHour' : stud.totalHour + 1,
+    }); 
+
+    // add this in attendance collection
   }
 
   markAttendance() async {
@@ -59,7 +69,7 @@ class _MarkAttendanceState extends State<MarkAttendance> {
 
     String abs = absentController.text;
     // Prepared a list of absentees
-    List absent = abs.split(",");
+    absent = abs.split(",");
     print(absent);
     absentController.clear();
 
