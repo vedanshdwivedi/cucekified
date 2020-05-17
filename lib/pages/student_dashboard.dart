@@ -11,7 +11,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
 
   int work = currentStudent.workingHour;
   int total = currentStudent.totalHour;
-  double perc = 0.0;
+  String perc = '0.00';
 
   handleLogout(){
     setState(() {
@@ -35,6 +35,11 @@ class _StudentDashboardState extends State<StudentDashboard> {
               child: Text("Current Attendance Percentage is : $perc"),
             ),
           ),
+          
+          // get a listview
+
+          // change password
+
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -46,11 +51,13 @@ class _StudentDashboardState extends State<StudentDashboard> {
     );
   }
 
-  double calcPerc(a, b){
+  String calcPerc(int a, int b){
     if(a==0 || b==0)
-      return 0;
+      return "0.00";
     double c = a/b;
-    return c*100;
+    c = c*100;
+    String ab = c.toStringAsFixed(2);
+    return ab;
   }
 
   @override
