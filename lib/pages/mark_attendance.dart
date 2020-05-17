@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cucekified/models/student.dart';
 import 'package:cucekified/pages/teacher_dashboard.dart';
+import 'package:cucekified/pages/teacher_login.dart';
 import 'package:cucekified/widgets/progress.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -46,7 +47,7 @@ class _MarkAttendanceState extends State<MarkAttendance> {
     }
   }
 
-  getUserById(String id) async {
+  MarkAttendanceInDatabase(String id) async {
     DocumentSnapshot snapshot = await studRef.document(id).get();
     Student stud = Student.fromDocument(snapshot);
 
@@ -59,7 +60,16 @@ class _MarkAttendanceState extends State<MarkAttendance> {
       'totalHour' : stud.totalHour + 1,
     }); 
 
+    String attendanceId = stud.regNo +"_"+ dateFinal ;
+    String mark = add == 0 ? "A" : currentTeacher.username;
+
     // add this in attendance collection
+    attRef.document(stud.regNo).collection("markedAttendance").document(attendanceId).setData(
+      {
+        'date': dateFinal,
+        '$hourFinal': mark,
+      },merge: true,
+    );
   }
 
   markAttendance() async {
@@ -73,57 +83,21 @@ class _MarkAttendanceState extends State<MarkAttendance> {
     print(absent);
     absentController.clear();
 
-    //int add;
-    // fetched the students list of the class
-    // QuerySnapshot snapshot = await studRef
-    //     .where("dept", isEqualTo: deptFinal)
-    //     .where("year", isEqualTo: yearFinal)
-    //     .getDocuments();
     studRef
         .where('dept', isEqualTo: "$deptFinal")
         .where('year', isEqualTo: yearFinal)
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((DocumentSnapshot doc) {
-        getUserById(doc.documentID);
+        MarkAttendanceInDatabase(doc.documentID);
       });
     });
-
-    print("Fetched all students");
-
-    // perform operations for updating each student's profile
-    // snapshot.documents.forEach((DocumentSnapshot doc) {
-
-    //   print('Student $doc.exits Name : $doc["name"]');
-    //   // Perform Actions
-    //   Student stud = Student.fromDocument(doc);
-    //   if (absent.contains(stud.roll))
-    //     add = 0;
-    //   else
-    //     add = 1;
-
-    //   print("Name : $stud.name");
-    //   // update student profile.
-    //   Firestore.instance.collection('students').document(stud.id).updateData({
-    //     "dept": stud.dept,
-    //     "gmail": stud.gmail,
-    //     "name": stud.name,
-    //     "password": stud.password,
-    //     "regNo": stud.regNo,
-    //     "role": "S",
-    //     "roll": stud.roll,
-    //     "totalHour": stud.totalHour + 1,
-    //     "workingHour": stud.workingHour + add,
-    //     "year": stud.year
-    //   });
-    //   print("Updated for $stud.name");
-
-    //   // update attendance of the student
-    // });
 
     setState(() {
       isMarking = false;
     });
+    final snackbar = SnackBar(content: Text('Attendance Marked Successfully'));
+    AttendanceKey.currentState.showSnackBar(snackbar);
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => TeacherDashboard()));
   }

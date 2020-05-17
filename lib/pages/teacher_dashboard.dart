@@ -8,7 +8,7 @@ class TeacherDashboard extends StatefulWidget {
   @override
   _TeacherDashboardState createState() => _TeacherDashboardState();
 }
-
+ final AttendanceKey = GlobalKey<ScaffoldState>();
 
 class _TeacherDashboardState extends State<TeacherDashboard> {
   handleLogout() {
@@ -24,6 +24,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: AttendanceKey,
       appBar: AppBar(
         centerTitle: true,
         automaticallyImplyLeading: false,
