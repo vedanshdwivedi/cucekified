@@ -15,30 +15,27 @@
 
 <body>
     <div class="container">
-
-
-
-
-
         <div class="jumbotron">
             <h1 class="display-4">Hello, Student!</h1>
             <p class="lead">Fill in the details carefully to add yourself to the CUCEK Student Family</p>
             <hr class="my-4">
 
-            <form name="form">
+            <form name="form" id="studentRegistrationForm">
                 <table class="table">
                     <tbody>
                         <tr>
                             <td><b>Name</b></td>
-                            <td><input type="text" placeholder="Enter Name" class="form-control" name="name" required autofocus></td>
+                            <td><input type="text" placeholder="Enter Name" class="form-control" id="name" name="name"
+                                    required autofocus></td>
                         </tr>
                         <tr>
                             <td><b>Registration Number</b></td>
-                            <td><input type="text" placeholder="Enter Reg Number" class="form-control" name="regNo" required></td>
+                            <td><input type="text" placeholder="Enter Reg Number" class="form-control" name="regNo"
+                                    id="regNo" required></td>
                         </tr>
                         <tr>
                             <td><label for="branch"><b>Department</b></label></td>
-                            <td><select name="branch" class="form-control" required>
+                            <td><select name="branch" id="branch" class="form-control" required>
                                     <option value="">SELECT YOUR BRANCH</option>
                                     <option value="CE">Civil Engineering</option>
                                     <option value="CS">Computer Science and Engineering</option>
@@ -51,7 +48,7 @@
                         </tr>
                         <tr>
                             <td><label for="year"><b>Year of Study</b></label></td>
-                            <td><select name="year" class="form-control" required>
+                            <td><select name="year" id="year" class="form-control" required>
                                     <option value="">SELECT YOUR Year</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -61,21 +58,19 @@
                         </tr>
                         <tr>
                             <td><b>Class roll no</b></td>
-                            <td><input type="text" class="form-control" placeholder="Enter roll Number" required></td>
+                            <td><input type="text" class="form-control" placeholder="Enter roll Number" name="roll"
+                                    id="roll" required></td>
                         </tr>
                         <tr>
                             <td><label for="email"><b>E-mail</b></label></td>
-                            <td><input type="email" class="form-control" placeholder=" Enter Your E-mail" name="email" id="email" required>
+                            <td><input type="email" class="form-control" placeholder=" Enter Your E-mail" name="email"
+                                    id="email" required>
                             </td>
                         </tr>
                         <tr>
-                            <td><label for="password"><b>Password</b></label></td>
-                            <td><input type="password" class="form-control" placeholder="Enter Password" name="password" id="password"
-                                    required></td>
-                        </tr>
-                        <tr>
                             <td></td>
-                            <td><button type="submit" name="submit" class="signupbtn btn btn-success">Submit</button>
+                            <td><button type="submit" name="submit" id="submit"
+                                    class="signupbtn btn btn-success">Submit</button>
                             </td>
                         </tr>
                     </tbody>
@@ -92,6 +87,7 @@
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-firestore.js"></script>
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
@@ -124,6 +120,59 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
+
+
+    <script>
+        // My CUSTOM JAVASCRIPT
+        
+
+        // listen for submit event
+        document.getElementById('studentRegistrationForm').addEventListener('submit', formSubmit);
+
+        function formSubmit(e) {
+            document.getElementById('submit').style.display = 'none';
+            e.preventDefault();
+            // get values
+            let name = document.querySelector('#name').value;
+            let regNo = document.querySelector('#regNo').value;
+            let email = document.querySelector('#email').value;
+            let roll = document.querySelector('#roll').value;
+            let password = document.querySelector('#regNo').value;
+            let year = document.querySelector('#year').value;
+            let branch = document.querySelector('#branch').value;
+            var role = "S";
+            var workHour = 0;
+            var totalHour = 0;
+            sendMessage(name, regNo, email, roll, password, year, branch);
+            document.getElementById('studentRegistrationForm').reset();
+            document.getElementById('submit').style.display = 'block';
+
+        }
+
+        // Reference for collection
+        //let regRef = firebase.database().ref('register');
+        var firestore = firebase.firestore();
+        const db= firestore.collection("students");
+
+        function sendMessage(name, regNo, email, roll, password, year, branch) {
+            db.doc().set({
+                dept: branch,
+                gmail: email,
+                password: password,
+                regNo: regNo,
+                role: "S",
+                roll: roll,
+                totalHour: 0,
+                username: name,
+                workingHour: 0,
+                year: year
+            }).then(function(){
+                console.log("Data Saved");
+            }).catch(function(error){
+                console.log(error);
+            });
+        }
+    </script>
 </body>
 
 </html>
