@@ -29,25 +29,24 @@ class _StudentDashboardState extends State<StudentDashboard> {
 
   loadListView() {
     Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => ViewMarkedAttendance(), maintainState: true)
-    );
+        context,
+        MaterialPageRoute(
+            builder: (context) => ViewMarkedAttendance(), maintainState: true));
   }
 
   Widget createDashboard() {
     return Container(
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).accentColor,
-              Theme.of(context).primaryColor,
-            ],
-          ),
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            Theme.of(context).primaryColor,
+            Theme.of(context).accentColor,
+            Theme.of(context).primaryColor,
+          ],
         ),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,19 +54,25 @@ class _StudentDashboardState extends State<StudentDashboard> {
           Center(
               child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text('Hello ${currentStudent.username}', style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20.0,
-            ),),
+            child: Text(
+              'Hello ${currentStudent.username}',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0,
+              ),
+            ),
           )),
 
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("$perc % Attendance", style: TextStyle(
-              fontSize: 24.0,
-              color: Colors.black87,
-            ),),
+              child: Text(
+                "$perc % Attendance",
+                style: TextStyle(
+                  fontSize: 24.0,
+                  color: Colors.black87,
+                ),
+              ),
             ),
           ),
 
@@ -76,7 +81,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
             padding: const EdgeInsets.all(8.0),
             child: Center(
                 child: RaisedButton.icon(
-                  color: Colors.blue[300],
+                    color: Colors.blue[300],
                     onPressed: loadListView,
                     icon: Icon(Icons.linear_scale),
                     label: Text('Show detailed view'))),
@@ -112,8 +117,10 @@ class _StudentDashboardState extends State<StudentDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: isStudAuth ? createDashboard() : StudentLogin(),
-    );
+    return WillPopScope(
+        child: Scaffold(
+          body: isStudAuth ? createDashboard() : StudentLogin(),
+        ),
+        onWillPop: () async => false);
   }
 }

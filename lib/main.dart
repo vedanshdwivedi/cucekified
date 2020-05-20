@@ -30,6 +30,20 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
 
+  
+  @override
+  void initState() { 
+    super.initState();
+    if(currentStudent != null){
+      isStudAuth = false;;
+      currentStudent = null;
+    }
+    if(currentTeacher != null){
+      isFacAuth = false;;
+      currentTeacher = null;
+    }
+  }
+
 
   gotoStudentLogin(){
     Navigator.push(context, MaterialPageRoute(builder: (context) => StudentLogin()));

@@ -25,7 +25,9 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
       key: AttendanceKey,
       appBar: AppBar(
         centerTitle: true,
@@ -84,6 +86,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
             ],
           ),
         ),
+      ),
       ),
     );
   }
