@@ -14,7 +14,6 @@ int year;
 String hour;
 
 class _SetParametersState extends State<SetParameters> {
-
   final _snackbarKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -166,99 +165,111 @@ class _SetParametersState extends State<SetParameters> {
     );
   }
 
-
-  handleParameters(){
-    if(date != null && dept != null && year != null && hour != null){
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => MarkAttendance()));
-    }else{
-      final snackBar = SnackBar(content: Text('Please fill in all the details before proceeding'));
+  handleParameters() {
+    if (date != null && dept != null && year != null && hour != null) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => MarkAttendance()));
+    } else {
+      final snackBar = SnackBar(
+          content: Text('Please fill in all the details before proceeding'));
       _snackbarKey.currentState.showSnackBar(snackBar);
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _snackbarKey,
-      body: ListView(
-        children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+    return WillPopScope(
+        child: Scaffold(
+          key: _snackbarKey,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            title: Text(
+              'Set Parameters',
+              style: TextStyle(color: Colors.black),
+            ),
+            centerTitle: true,
+            leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
+                onPressed: () => Navigator.of(context).pop()),
+          ),
+          body: ListView(
             children: <Widget>[
-
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("Set the following parameters : "),
-                ),
-              ),
-              // Date Picker
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 90.0, left: 8.0, right: 8.0, bottom: 8.0),
-                  child: RaisedButton(
-                    color: Colors.redAccent,
-                    child: date == null ? Text('Pick a date') : Text("Selected Date: $date"),
-                    onPressed: () {
-                      showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime.now().subtract(Duration(days: 3)),
-                              lastDate: DateTime.now())
-                          .then((value) {
-                        var formatter = new DateFormat('yyyy-MM-dd');
-                        setState(() {
-                          date = formatter.format(value);
-                        });
-                        // date = formatter.format(value);
-                        print(date);
-                      });
-                    },
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  // Date Picker
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 40.0, left: 8.0, right: 8.0, bottom: 8.0),
+                      child: RaisedButton(
+                        color: Colors.redAccent,
+                        child: date == null
+                            ? Text('Pick a date')
+                            : Text("Selected Date: $date"),
+                        onPressed: () {
+                          showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime.now()
+                                      .subtract(Duration(days: 3)),
+                                  lastDate: DateTime.now())
+                              .then((value) {
+                            var formatter = new DateFormat('yyyy-MM-dd');
+                            setState(() {
+                              date = formatter.format(value);
+                            });
+                            // date = formatter.format(value);
+                            print(date);
+                          });
+                        },
+                      ),
+                    ),
                   ),
-                ),
-              ),
 
-              // dept picker
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: deptPicker(),
-                ),
-              ),
+                  // dept picker
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: deptPicker(),
+                    ),
+                  ),
 
-              // year picker
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: yearPicker(),
-                ),
-              ),
+                  // year picker
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: yearPicker(),
+                    ),
+                  ),
 
-              // hour picker
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: hourPicker(),
-                ),
-              ),
+                  // hour picker
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: hourPicker(),
+                    ),
+                  ),
 
-              // Mark Attendance
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: RaisedButton.icon(
-                      onPressed: handleParameters,
-                      icon: Icon(Icons.save),
-                      label: Text('Mark Attendance')),
-                ),
-              )
+                  // Mark Attendance
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: RaisedButton.icon(
+                          onPressed: handleParameters,
+                          icon: Icon(Icons.save),
+                          label: Text('Mark Attendance')),
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
-        ],
-      ),
-    );
+        ),
+        onWillPop: () async => false);
   }
 }
