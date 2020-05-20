@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cucekified/models/teacher.dart';
+import 'package:cucekified/pages/student_login.dart';
 import 'package:cucekified/pages/teacher_dashboard.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class TeacherLogin extends StatefulWidget {
 }
 
 Teacher currentTeacher;
-bool isAuth = false;
+bool isFacAuth = false;
 
 class _TeacherLoginState extends State<TeacherLogin> {
   final emailController = TextEditingController();
@@ -24,6 +25,10 @@ class _TeacherLoginState extends State<TeacherLogin> {
   bool isValidating;
 
   handleLogin() async {
+    if(currentStudent != null){
+      currentStudent = null;
+      isStudAuth = false;
+    }
     String u = emailController.text;
     String p = passwordController.text;
     emailController.clear();
@@ -40,14 +45,14 @@ class _TeacherLoginState extends State<TeacherLogin> {
     if (currentTeacher != null && currentTeacher.password == p && currentTeacher.role == "T") {
       // perform login and load Teacher dashboard
       setState(() {
-        isAuth = true;
+        isFacAuth = true;
         isValidating = false;
       });
       final snackBar = SnackBar(content: Text('Login Successful'));
       Scaffold.of(context).showSnackBar(snackBar);
     } else {
       setState(() {
-        isAuth = false;
+        isFacAuth = false;
         isValidating = false;
       });
       // load teh snackbar and reattempt login
@@ -60,9 +65,9 @@ class _TeacherLoginState extends State<TeacherLogin> {
   void initState() {
     super.initState();
     if(currentTeacher == null)
-      isAuth = false;
+      isFacAuth = false;
     else
-      isAuth = true;
+      isFacAuth = true;
     isValidating = false;
   }
 
@@ -181,9 +186,9 @@ class _TeacherLoginState extends State<TeacherLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: isAuth ? null : loginAppBar(),
+      appBar: isFacAuth ? null : loginAppBar(),
       key: _scaffoldKey,
-      body: isAuth ? TeacherDashboard() : loadLoginScreen(),
+      body: isFacAuth ? TeacherDashboard() : loadLoginScreen(),
     );
   }
 }

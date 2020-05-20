@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cucekified/models/student.dart';
 import 'package:cucekified/pages/student_dashboard.dart';
+import 'package:cucekified/pages/teacher_login.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
@@ -13,7 +14,7 @@ class StudentLogin extends StatefulWidget {
 }
 
 Student currentStudent;
-bool isAuth = false;
+bool isStudAuth = false;
 
 class _StudentLoginState extends State<StudentLogin> {
   final emailController = TextEditingController();
@@ -31,23 +32,29 @@ class _StudentLoginState extends State<StudentLogin> {
 
     setState(() {
       isValidating = true;
+      if (currentTeacher != null) {
+        currentTeacher = null;
+        isFacAuth = false;
+      }
     });
     QuerySnapshot snapshot =
         await studRef.where("gmail", isEqualTo: u).limit(1).getDocuments();
     snapshot.documents.forEach((DocumentSnapshot doc) {
       currentStudent = doc.exists ? Student.fromDocument(doc) : null;
     });
-    if (currentStudent != null && currentStudent.password == p && currentStudent.role == "S") {
+    if (currentStudent != null &&
+        currentStudent.password == p &&
+        currentStudent.role == "S") {
       // perform login and load student dashboard
       setState(() {
-        isAuth = true;
+        isStudAuth = true;
         isValidating = false;
       });
       final snackBar = SnackBar(content: Text('Login Successful'));
       Scaffold.of(context).showSnackBar(snackBar);
     } else {
       setState(() {
-        isAuth = false;
+        isStudAuth = false;
         isValidating = false;
       });
       // load teh snackbar and reattempt login
@@ -59,7 +66,7 @@ class _StudentLoginState extends State<StudentLogin> {
   @override
   void initState() {
     super.initState();
-    isAuth = false;
+    isStudAuth = false;
     isValidating = false;
   }
 
@@ -167,20 +174,20 @@ class _StudentLoginState extends State<StudentLogin> {
     );
   }
 
-  AppBar loginAppBar(){
+  AppBar loginAppBar() {
     return AppBar(
-        title: Text('Student Login'),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-      );
+      title: Text('Student Login'),
+      centerTitle: true,
+      automaticallyImplyLeading: false,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: isAuth ? null : loginAppBar(),
+      appBar: isStudAuth ? null : loginAppBar(),
       key: _scaffoldKey,
-      body: isAuth ? StudentDashboard() : loadLoginScreen(),
+      body: isStudAuth ? StudentDashboard() : loadLoginScreen(),
     );
   }
 }

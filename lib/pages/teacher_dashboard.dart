@@ -1,3 +1,4 @@
+import 'package:cucekified/pages/student_login.dart';
 import 'package:cucekified/pages/teacher_login.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,8 @@ class TeacherDashboard extends StatefulWidget {
 class _TeacherDashboardState extends State<TeacherDashboard> {
   handleLogout() {
     setState(() {
-      isAuth = false;
+      isFacAuth = false;
+      currentTeacher = null;
     });
     Navigator.push(
       context,

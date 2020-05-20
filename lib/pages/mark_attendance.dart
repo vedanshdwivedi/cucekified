@@ -95,6 +95,14 @@ class _MarkAttendanceState extends State<MarkAttendance> {
 
     setState(() {
       isMarking = false;
+      dateFinal = null;
+      deptFinal = null;
+      yearFinal = null;
+      hourFinal = null;
+      date = null;
+      dept = null;
+      year = null;
+      hour = null;
     });
     final snackbar = SnackBar(content: Text('Attendance Marked Successfully'));
     AttendanceKey.currentState.showSnackBar(snackbar);

@@ -206,8 +206,8 @@ class _SetParametersState extends State<SetParameters> {
                       showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
-                              firstDate: DateTime(2019),
-                              lastDate: DateTime(2025))
+                              firstDate: DateTime.now().subtract(Duration(days: 3)),
+                              lastDate: DateTime.now())
                           .then((value) {
                         var formatter = new DateFormat('yyyy-MM-dd');
                         setState(() {

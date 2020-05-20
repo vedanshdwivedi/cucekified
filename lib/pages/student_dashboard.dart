@@ -18,7 +18,8 @@ class _StudentDashboardState extends State<StudentDashboard> {
 
   handleLogout() {
     setState(() {
-      isAuth = false;
+      isStudAuth = false;
+      currentStudent = null;
     });
     Navigator.push(
       context,
@@ -112,7 +113,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: isAuth ? createDashboard() : StudentLogin(),
+      body: isStudAuth ? createDashboard() : StudentLogin(),
     );
   }
 }
