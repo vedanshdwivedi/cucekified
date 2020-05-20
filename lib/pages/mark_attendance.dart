@@ -47,7 +47,7 @@ class _MarkAttendanceState extends State<MarkAttendance> {
     }
   }
 
-  MarkAttendanceInDatabase(String id) async {
+  markAttendanceInDatabase(String id) async {
     DocumentSnapshot snapshot = await studRef.document(id).get();
     Student stud = Student.fromDocument(snapshot);
 
@@ -89,7 +89,7 @@ class _MarkAttendanceState extends State<MarkAttendance> {
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((DocumentSnapshot doc) {
-        MarkAttendanceInDatabase(doc.documentID);
+        markAttendanceInDatabase(doc.documentID);
       });
     });
 

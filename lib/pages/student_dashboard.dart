@@ -1,44 +1,75 @@
 import 'package:cucekified/main.dart';
+import 'package:cucekified/pages/view_marked_attendance.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'student_login.dart';
+import '../models/attendance.dart';
 
 class StudentDashboard extends StatefulWidget {
   @override
   _StudentDashboardState createState() => _StudentDashboardState();
 }
 
-class _StudentDashboardState extends State<StudentDashboard> {
+final List<Attendance> studentAttendance = [];
 
+class _StudentDashboardState extends State<StudentDashboard> {
   int work = currentStudent.workingHour;
   int total = currentStudent.totalHour;
   String perc = '0.00';
 
-  handleLogout(){
+  handleLogout() {
     setState(() {
       isAuth = false;
     });
     Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => MyApp()),
-  );
+      context,
+      MaterialPageRoute(builder: (context) => MyApp()),
+    );
   }
 
-  Widget createDashboard(){
+  loadListView() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => ViewMarkedAttendance(), maintainState: true)
+    );
+  }
+
+  Widget createDashboard() {
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Center(
+              child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Hello ${currentStudent.username}', style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20.0,
+            ),),
+          )),
+
+          Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Current Attendance Percentage is : $perc"),
+              child: Text("$perc % Attendance", style: TextStyle(
+              fontSize: 24.0,
+              color: Colors.green,
+            ),),
             ),
           ),
-          
-          // get a listview
 
-          // change password
+          // get a listview
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+                child: RaisedButton.icon(
+                  color: Colors.orangeAccent,
+                    onPressed: loadListView,
+                    icon: Icon(Icons.linear_scale),
+                    label: Text('Show detailed view'))),
+          ),
 
           Center(
             child: Padding(
@@ -51,11 +82,10 @@ class _StudentDashboardState extends State<StudentDashboard> {
     );
   }
 
-  String calcPerc(int a, int b){
-    if(a==0 || b==0)
-      return "0.00";
-    double c = a/b;
-    c = c*100;
+  String calcPerc(int a, int b) {
+    if (a == 0 || b == 0) return "0.00";
+    double c = a / b;
+    c = c * 100;
     String ab = c.toStringAsFixed(2);
     return ab;
   }
