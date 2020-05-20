@@ -121,12 +121,69 @@ class _MarkAttendanceState extends State<MarkAttendance> {
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Mark Attendance for $deptFinal, $yearFinal year, $hourFinal",
-                  style: TextStyle(
-                    fontSize: 40.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    // Date
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(child: Text('Date Selected')),
+                            Expanded(child: Text(dateFinal))
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    // Department
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(child: Text('Branch Selected')),
+                            Expanded(child: Text(deptFinal))
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    // Year
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(child: Text('Year Selected')),
+                            Expanded(child: Text('$yearFinal'))
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    // Hour
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(child: Text(hourFinal))
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -154,7 +211,7 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                   ),
                   validator: (val) {
                     if (val.isEmpty)
-                      return "Enter 0 to mark all present";
+                      return "Leave empty to Mark All Present";
                     else
                       return null;
                   },
