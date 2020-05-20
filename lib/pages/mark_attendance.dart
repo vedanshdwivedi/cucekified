@@ -56,19 +56,24 @@ class _MarkAttendanceState extends State<MarkAttendance> {
 
     // update data on student profile
     studRef.document(id).updateData({
-      'workingHour' : stud.workingHour + add,
-      'totalHour' : stud.totalHour + 1,
-    }); 
+      'workingHour': stud.workingHour + add,
+      'totalHour': stud.totalHour + 1,
+    });
 
-    String attendanceId = stud.regNo +"_"+ dateFinal ;
+    String attendanceId = stud.regNo + "_" + dateFinal;
     String mark = add == 0 ? "A" : currentTeacher.username;
 
     // add this in attendance collection
-    attRef.document(stud.regNo).collection("markedAttendance").document(attendanceId).setData(
+    attRef
+        .document(stud.regNo)
+        .collection("markedAttendance")
+        .document(attendanceId)
+        .setData(
       {
         'date': dateFinal,
         '$hourFinal': mark,
-      },merge: true,
+      },
+      merge: true,
     );
   }
 
@@ -125,6 +130,25 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
+                    //Faculty Name
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(
+                                child: Text(
+                              'Faculty',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )),
+                            Expanded(child: Text(currentTeacher.name))
+                          ],
+                        ),
+                      ),
+                    ),
+
                     // Date
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -133,7 +157,8 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Expanded(child: Text('Date Selected')),
+                            Expanded(child: Text('Date Selected',
+                              style: TextStyle(fontWeight: FontWeight.bold),)),
                             Expanded(child: Text(dateFinal))
                           ],
                         ),
@@ -148,7 +173,8 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Expanded(child: Text('Branch Selected')),
+                            Expanded(child: Text('Branch Selected',
+                              style: TextStyle(fontWeight: FontWeight.bold),)),
                             Expanded(child: Text(deptFinal))
                           ],
                         ),
@@ -163,7 +189,8 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Expanded(child: Text('Year Selected')),
+                            Expanded(child: Text('Year Selected',
+                              style: TextStyle(fontWeight: FontWeight.bold),)),
                             Expanded(child: Text('$yearFinal'))
                           ],
                         ),
@@ -178,6 +205,11 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
+                            Expanded(
+                                child: Text(
+                              'Hour Selected',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )),
                             Expanded(child: Text(hourFinal))
                           ],
                         ),
@@ -238,16 +270,17 @@ class _MarkAttendanceState extends State<MarkAttendance> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(child: Scaffold(
       appBar: AppBar(
         title: Text('Mark Attendance'),
         centerTitle: true,
         automaticallyImplyLeading: false,
+        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () => Navigator.of(context).pop()),
       ),
       body: Container(
         alignment: Alignment.center,
         child: isMarking ? circularProgress() : loadForm(),
       ),
-    );
+    ), onWillPop: () async => false);
   }
 }
