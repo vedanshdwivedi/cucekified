@@ -36,6 +36,17 @@ class _StudentDashboardState extends State<StudentDashboard> {
 
   Widget createDashboard() {
     return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Theme.of(context).primaryColor,
+              Theme.of(context).accentColor,
+              Theme.of(context).primaryColor,
+            ],
+          ),
+        ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,7 +65,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
               padding: const EdgeInsets.all(8.0),
               child: Text("$perc % Attendance", style: TextStyle(
               fontSize: 24.0,
-              color: Colors.green,
+              color: Colors.black87,
             ),),
             ),
           ),
@@ -64,7 +75,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
             padding: const EdgeInsets.all(8.0),
             child: Center(
                 child: RaisedButton.icon(
-                  color: Colors.orangeAccent,
+                  color: Colors.blue[300],
                     onPressed: loadListView,
                     icon: Icon(Icons.linear_scale),
                     label: Text('Show detailed view'))),

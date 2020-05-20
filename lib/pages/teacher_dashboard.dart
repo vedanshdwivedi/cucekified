@@ -31,6 +31,17 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
         title: Text("Faculty Dashboard"),
       ),
       body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Theme.of(context).primaryColor,
+              Theme.of(context).accentColor,
+              Theme.of(context).primaryColor,
+            ],
+          ),
+        ),
         child: Padding(
           padding: EdgeInsets.all(10.0),
           child: Column(
