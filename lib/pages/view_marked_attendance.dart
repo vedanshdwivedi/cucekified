@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cucekified/models/attendance.dart';
-import 'package:cucekified/models/student.dart';
 import 'package:cucekified/pages/student_login.dart';
 import 'package:cucekified/widgets/progress.dart';
 import 'package:flutter/material.dart';
@@ -8,11 +7,7 @@ import 'home.dart';
 
 final markedRef =
     attRef.document(currentStudent.regNo).collection('markedAttendance');
-
 bool isCalculating = false;
-// List of Attendance
-
-
 
 class ViewMarkedAttendance extends StatefulWidget {
   @override
@@ -37,7 +32,6 @@ class _ViewMarkedAttendanceState extends State<ViewMarkedAttendance> {
   }
 
   processHourAttendance(String chk) {
-    print("Got : $chk");
     if (chk == "A") return "A";
     if (chk == null) return "-";
     if (chk != null && chk != "A") return "P";
@@ -54,7 +48,6 @@ class _ViewMarkedAttendanceState extends State<ViewMarkedAttendance> {
           String h4 = processHourAttendance(att.hour4);
           String h5 = processHourAttendance(att.hour5);
           String h6 = processHourAttendance(att.hour6);
-          print("$h1 $h2 $h3 $h4 $h5 $h6");
           return ListTile(
             title: Text(
               att.date,
@@ -70,12 +63,12 @@ class _ViewMarkedAttendanceState extends State<ViewMarkedAttendance> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Expanded(child: Text('1')),
-                      Expanded(child: Text('2')),
-                      Expanded(child: Text('3')),
-                      Expanded(child: Text('4')),
-                      Expanded(child: Text('5')),
-                      Expanded(child: Text('6')),
+                      Expanded(child: Text('1', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),)),
+                      Expanded(child: Text('2', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),)),
+                      Expanded(child: Text('3', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),)),
+                      Expanded(child: Text('4', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),)),
+                      Expanded(child: Text('5', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),)),
+                      Expanded(child: Text('6', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),)),
                     ],
                   ),
                   Row(

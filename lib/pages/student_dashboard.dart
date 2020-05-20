@@ -1,6 +1,5 @@
 import 'package:cucekified/main.dart';
 import 'package:cucekified/pages/view_marked_attendance.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'student_login.dart';
 import '../models/attendance.dart';
