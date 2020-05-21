@@ -3,6 +3,7 @@ import 'package:cucekified/pages/view_marked_attendance.dart';
 import 'package:flutter/material.dart';
 import 'student_login.dart';
 import '../models/attendance.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class StudentDashboard extends StatefulWidget {
   @override
@@ -15,6 +16,8 @@ class _StudentDashboardState extends State<StudentDashboard> {
   int work = currentStudent.workingHour;
   int total = currentStudent.totalHour;
   String perc = '0.00';
+  double filler = 0.00;
+  Color arc = Colors.red;
 
   handleLogout() {
     setState(() {
@@ -34,6 +37,23 @@ class _StudentDashboardState extends State<StudentDashboard> {
             builder: (context) => ViewMarkedAttendance(), maintainState: true));
   }
 
+  Widget loadCircularAnimator() {
+    return Center(
+      child: CircularPercentIndicator(
+        radius: 130.0,
+        backgroundColor: Colors.white,
+        lineWidth: 10.0,
+        circularStrokeCap: CircularStrokeCap.round,
+        progressColor: arc,
+        center: Text(
+          '${currentStudent.workingHour} / ${currentStudent.totalHour}   Hours',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        percent: filler,
+      ),
+    );
+  }
+
   Widget createDashboard() {
     return Container(
       decoration: BoxDecoration(
@@ -51,6 +71,10 @@ class _StudentDashboardState extends State<StudentDashboard> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          Container(
+            child: loadCircularAnimator(),
+          ),
+
           Center(
               child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -99,9 +123,15 @@ class _StudentDashboardState extends State<StudentDashboard> {
   }
 
   String calcPerc(int a, int b) {
-    if (a == 0 || b == 0) return "0.00";
+    if (a == 0 || b == 0) {
+      return "0.00";
+    }
     double c = a / b;
     c = c * 100;
+    setState(() {
+      filler = c.ceilToDouble() / 100.0;
+      if (filler > 0.74) arc = Colors.green;
+    });
     String ab = c.toStringAsFixed(2);
     return ab;
   }

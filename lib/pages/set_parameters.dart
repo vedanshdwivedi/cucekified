@@ -178,8 +178,7 @@ class _SetParametersState extends State<SetParameters> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-        child: Scaffold(
+    return Scaffold(
           key: _snackbarKey,
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -269,7 +268,6 @@ class _SetParametersState extends State<SetParameters> {
               ),
             ],
           ),
-        ),
-        onWillPop: () async => false);
+        );
   }
 }

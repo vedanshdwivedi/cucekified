@@ -270,7 +270,7 @@ class _MarkAttendanceState extends State<MarkAttendance> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(child: Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text('Mark Attendance'),
         centerTitle: true,
@@ -281,6 +281,6 @@ class _MarkAttendanceState extends State<MarkAttendance> {
         alignment: Alignment.center,
         child: isMarking ? circularProgress() : loadForm(),
       ),
-    ), onWillPop: () async => false);
+    );
   }
 }

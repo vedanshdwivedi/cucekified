@@ -13,7 +13,6 @@ import '../models/teacher.dart';
 
 import 'student_dashboard.dart';
 import 'teacher_dashboard.dart';
-import 'teacher_marker.dart';
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
 final studRef = Firestore.instance.collection('students');

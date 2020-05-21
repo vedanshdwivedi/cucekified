@@ -34,14 +34,10 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() { 
     super.initState();
-    if(currentStudent != null){
-      isStudAuth = false;;
-      currentStudent = null;
-    }
-    if(currentTeacher != null){
-      isFacAuth = false;;
-      currentTeacher = null;
-    }
+    currentStudent = null;
+    currentTeacher = null;
+    isFacAuth = false;
+    isStudAuth = false;
   }
 
 

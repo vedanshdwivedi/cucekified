@@ -1,6 +1,7 @@
 // import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cucekified/main.dart';
 import 'package:cucekified/models/student.dart';
 import 'package:cucekified/pages/student_dashboard.dart';
 import 'package:cucekified/pages/teacher_login.dart';
@@ -91,7 +92,7 @@ class _StudentLoginState extends State<StudentLogin> {
                     autovalidate: true,
                     validator: (val) {
                       if (val.trim().length < 6 || val.isEmpty)
-                        return "Too short ot be an email";
+                        return "Too short to be an email";
                       if (!EmailValidator.validate(val))
                         return "Invalid email id";
                       else
@@ -179,6 +180,10 @@ class _StudentLoginState extends State<StudentLogin> {
       title: Text('Student Login'),
       centerTitle: true,
       automaticallyImplyLeading: false,
+      leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => MyApp()))),
     );
   }
 

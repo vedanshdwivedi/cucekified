@@ -6,6 +6,7 @@ import 'package:cucekified/pages/student_login.dart';
 import 'package:cucekified/pages/teacher_dashboard.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import '../main.dart';
 import 'home.dart';
 
 class TeacherLogin extends StatefulWidget {
@@ -15,6 +16,7 @@ class TeacherLogin extends StatefulWidget {
 
 Teacher currentTeacher;
 bool isFacAuth = false;
+bool noBack = false;
 
 class _TeacherLoginState extends State<TeacherLogin> {
   final emailController = TextEditingController();
@@ -25,7 +27,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
   bool isValidating;
 
   handleLogin() async {
-    if(currentStudent != null){
+    if (currentStudent != null) {
       currentStudent = null;
       isStudAuth = false;
     }
@@ -42,7 +44,9 @@ class _TeacherLoginState extends State<TeacherLogin> {
     snapshot.documents.forEach((DocumentSnapshot doc) {
       currentTeacher = doc.exists ? Teacher.fromDocument(doc) : null;
     });
-    if (currentTeacher != null && currentTeacher.password == p && currentTeacher.role == "T") {
+    if (currentTeacher != null &&
+        currentTeacher.password == p &&
+        currentTeacher.role == "T") {
       // perform login and load Teacher dashboard
       setState(() {
         isFacAuth = true;
@@ -64,11 +68,18 @@ class _TeacherLoginState extends State<TeacherLogin> {
   @override
   void initState() {
     super.initState();
-    if(currentTeacher == null)
+    if (currentTeacher == null)
       isFacAuth = false;
     else
       isFacAuth = true;
     isValidating = false;
+    if (noBack == true && currentTeacher != null ) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => TeacherDashboard()));
+    }
+    if (noBack == true && currentTeacher == null ) {
+      noBack = false;
+      Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
+    }
   }
 
   Widget formLayout() {
@@ -175,12 +186,16 @@ class _TeacherLoginState extends State<TeacherLogin> {
     );
   }
 
-  AppBar loginAppBar(){
+  AppBar loginAppBar() {
     return AppBar(
-        title: Text('Teacher Login'),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-      );
+      title: Text('Teacher Login'),
+      centerTitle: true,
+      automaticallyImplyLeading: false,
+      leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => MyApp()))),
+    );
   }
 
   @override
