@@ -1,6 +1,8 @@
 import 'package:cucekified/main.dart';
 import 'package:cucekified/pages/view_marked_attendance.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'student_login.dart';
 import '../models/attendance.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -24,7 +26,9 @@ class _StudentDashboardState extends State<StudentDashboard> {
       isStudAuth = false;
       currentStudent = null;
     });
-    Navigator.push(
+    // SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+    Phoenix.rebirth(context);
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => MyApp()),
     );
@@ -56,7 +60,6 @@ class _StudentDashboardState extends State<StudentDashboard> {
 
   Widget createDashboard() {
     return Container(
-<<<<<<< HEAD
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topRight,
@@ -68,8 +71,6 @@ class _StudentDashboardState extends State<StudentDashboard> {
           ],
         ),
       ),
-=======
->>>>>>> parent of a3f6b06... Changed UI of dashboards
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,7 +94,6 @@ class _StudentDashboardState extends State<StudentDashboard> {
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-<<<<<<< HEAD
               child: Text(
                 "$perc % Attendance",
                 style: TextStyle(
@@ -101,12 +101,6 @@ class _StudentDashboardState extends State<StudentDashboard> {
                   color: Colors.black87,
                 ),
               ),
-=======
-              child: Text("$perc % Attendance", style: TextStyle(
-              fontSize: 24.0,
-              color: Colors.green,
-            ),),
->>>>>>> parent of a3f6b06... Changed UI of dashboards
             ),
           ),
 
@@ -115,11 +109,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
             padding: const EdgeInsets.all(8.0),
             child: Center(
                 child: RaisedButton.icon(
-<<<<<<< HEAD
                     color: Colors.blue[300],
-=======
-                  color: Colors.orangeAccent,
->>>>>>> parent of a3f6b06... Changed UI of dashboards
                     onPressed: loadListView,
                     icon: Icon(Icons.linear_scale),
                     label: Text('Show detailed view'))),

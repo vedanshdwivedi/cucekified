@@ -1,6 +1,8 @@
 import 'package:cucekified/pages/student_login.dart';
 import 'package:cucekified/pages/teacher_login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import '../main.dart';
 import './set_parameters.dart';
@@ -17,7 +19,9 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
       isFacAuth = false;
       currentTeacher = null;
     });
-    Navigator.push(
+    // SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+    Phoenix.rebirth(context);
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => MyApp()),
     );

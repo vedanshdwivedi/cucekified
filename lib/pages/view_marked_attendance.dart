@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cucekified/models/attendance.dart';
+import 'package:cucekified/models/student.dart';
 import 'package:cucekified/pages/student_login.dart';
 import 'package:cucekified/widgets/progress.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,9 @@ import 'home.dart';
 
 final markedRef =
     attRef.document(currentStudent.regNo).collection('markedAttendance');
+
 bool isCalculating = false;
+// List of Attendance
 
 class ViewMarkedAttendance extends StatefulWidget {
   @override
@@ -15,11 +18,10 @@ class ViewMarkedAttendance extends StatefulWidget {
 }
 
 class _ViewMarkedAttendanceState extends State<ViewMarkedAttendance> {
-  
   List<Attendance> id = [];
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     markedRef.getDocuments().then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((DocumentSnapshot doc) {
@@ -38,17 +40,20 @@ class _ViewMarkedAttendanceState extends State<ViewMarkedAttendance> {
   }
 
   Widget loadListView() {
-      return ListView.builder(
-        itemCount: id.length,
-        itemBuilder: (BuildContext context, int index) {
-          Attendance att = id[index];
-          String h1 = processHourAttendance(att.hour1);
-          String h2 = processHourAttendance(att.hour2);
-          String h3 = processHourAttendance(att.hour3);
-          String h4 = processHourAttendance(att.hour4);
-          String h5 = processHourAttendance(att.hour5);
-          String h6 = processHourAttendance(att.hour6);
-          return ListTile(
+    return ListView.builder(
+      itemCount: id.length,
+      itemBuilder: (BuildContext context, int index) {
+        Attendance att = id[index];
+        String h1 = processHourAttendance(att.hour1);
+        String h2 = processHourAttendance(att.hour2);
+        String h3 = processHourAttendance(att.hour3);
+        String h4 = processHourAttendance(att.hour4);
+        String h5 = processHourAttendance(att.hour5);
+        String h6 = processHourAttendance(att.hour6);
+        print("$h1 $h2 $h3 $h4 $h5 $h6");
+        print(id.length);
+        return Card(
+          child: ListTile(
             title: Text(
               att.date,
               style: TextStyle(
@@ -59,18 +64,53 @@ class _ViewMarkedAttendanceState extends State<ViewMarkedAttendance> {
             subtitle: Container(
               child: Column(
                 children: <Widget>[
+                  // Show Hours
+                  Divider(),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Expanded(child: Text('1', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),)),
-                      Expanded(child: Text('2', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),)),
-                      Expanded(child: Text('3', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),)),
-                      Expanded(child: Text('4', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),)),
-                      Expanded(child: Text('5', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),)),
-                      Expanded(child: Text('6', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),)),
+                      Divider(),
+                      Expanded(
+                          child: Text(
+                        '1',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
+                      )),
+                      Expanded(
+                          child: Text(
+                        '2',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
+                      )),
+                      Expanded(
+                          child: Text(
+                        '3',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
+                      )),
+                      Expanded(
+                          child: Text(
+                        '4',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
+                      )),
+                      Expanded(
+                          child: Text(
+                        '5',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
+                      )),
+                      Expanded(
+                          child: Text(
+                        '6',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.0),
+                      )),
                     ],
                   ),
+                  Divider(),
+                  // Show Attendance
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -86,9 +126,10 @@ class _ViewMarkedAttendanceState extends State<ViewMarkedAttendance> {
                 ],
               ),
             ),
-          );
-        },
-      );
+          ),
+        );
+      },
+    );
   }
 
   @override

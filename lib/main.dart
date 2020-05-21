@@ -2,10 +2,11 @@ import 'package:cucekified/pages/home.dart';
 import 'package:cucekified/pages/student_login.dart';
 import 'package:cucekified/pages/teacher_login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(Phoenix(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -29,16 +30,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
-  
-  @override
-  void initState() { 
-    super.initState();
-    currentStudent = null;
-    currentTeacher = null;
-    isFacAuth = false;
-    isStudAuth = false;
-  }
 
 
   gotoStudentLogin(){

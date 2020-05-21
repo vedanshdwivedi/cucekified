@@ -50,6 +50,7 @@ class _MarkAttendanceState extends State<MarkAttendance> {
   markAttendanceInDatabase(String id) async {
     DocumentSnapshot snapshot = await studRef.document(id).get();
     Student stud = Student.fromDocument(snapshot);
+    print(stud.username);
 
     // if roll in absent list then set add 0 to workingHour
     int add = absent.contains(stud.roll) ? 0 : 1;
@@ -62,6 +63,7 @@ class _MarkAttendanceState extends State<MarkAttendance> {
 
     String attendanceId = stud.regNo + "_" + dateFinal;
     String mark = add == 0 ? "A" : currentTeacher.username;
+    print("$attendanceId  $mark");
 
     // add this in attendance collection
     attRef
@@ -94,20 +96,14 @@ class _MarkAttendanceState extends State<MarkAttendance> {
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((DocumentSnapshot doc) {
+        print(doc.documentID);
         markAttendanceInDatabase(doc.documentID);
       });
     });
 
     setState(() {
       isMarking = false;
-      dateFinal = null;
       deptFinal = null;
-      yearFinal = null;
-      hourFinal = null;
-      date = null;
-      dept = null;
-      year = null;
-      hour = null;
     });
     final snackbar = SnackBar(content: Text('Attendance Marked Successfully'));
     AttendanceKey.currentState.showSnackBar(snackbar);
@@ -157,8 +153,11 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Expanded(child: Text('Date Selected',
-                              style: TextStyle(fontWeight: FontWeight.bold),)),
+                            Expanded(
+                                child: Text(
+                              'Date Selected',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )),
                             Expanded(child: Text(dateFinal))
                           ],
                         ),
@@ -173,8 +172,11 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Expanded(child: Text('Branch Selected',
-                              style: TextStyle(fontWeight: FontWeight.bold),)),
+                            Expanded(
+                                child: Text(
+                              'Branch Selected',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )),
                             Expanded(child: Text(deptFinal))
                           ],
                         ),
@@ -189,8 +191,11 @@ class _MarkAttendanceState extends State<MarkAttendance> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Expanded(child: Text('Year Selected',
-                              style: TextStyle(fontWeight: FontWeight.bold),)),
+                            Expanded(
+                                child: Text(
+                              'Year Selected',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )),
                             Expanded(child: Text('$yearFinal'))
                           ],
                         ),
@@ -275,7 +280,9 @@ class _MarkAttendanceState extends State<MarkAttendance> {
         title: Text('Mark Attendance'),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () => Navigator.of(context).pop()),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop()),
       ),
       body: Container(
         alignment: Alignment.center,
