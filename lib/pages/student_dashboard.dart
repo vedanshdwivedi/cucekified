@@ -56,6 +56,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
 
   Widget createDashboard() {
     return Container(
+<<<<<<< HEAD
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topRight,
@@ -67,6 +68,8 @@ class _StudentDashboardState extends State<StudentDashboard> {
           ],
         ),
       ),
+=======
+>>>>>>> parent of a3f6b06... Changed UI of dashboards
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -90,6 +93,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
+<<<<<<< HEAD
               child: Text(
                 "$perc % Attendance",
                 style: TextStyle(
@@ -97,6 +101,12 @@ class _StudentDashboardState extends State<StudentDashboard> {
                   color: Colors.black87,
                 ),
               ),
+=======
+              child: Text("$perc % Attendance", style: TextStyle(
+              fontSize: 24.0,
+              color: Colors.green,
+            ),),
+>>>>>>> parent of a3f6b06... Changed UI of dashboards
             ),
           ),
 
@@ -105,7 +115,11 @@ class _StudentDashboardState extends State<StudentDashboard> {
             padding: const EdgeInsets.all(8.0),
             child: Center(
                 child: RaisedButton.icon(
+<<<<<<< HEAD
                     color: Colors.blue[300],
+=======
+                  color: Colors.orangeAccent,
+>>>>>>> parent of a3f6b06... Changed UI of dashboards
                     onPressed: loadListView,
                     icon: Icon(Icons.linear_scale),
                     label: Text('Show detailed view'))),
