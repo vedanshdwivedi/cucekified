@@ -6,6 +6,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'student_login.dart';
 import '../models/attendance.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'student_login.dart';
 
 class StudentDashboard extends StatefulWidget {
   @override
@@ -13,10 +14,10 @@ class StudentDashboard extends StatefulWidget {
 }
 
 final List<Attendance> studentAttendance = [];
+int work = 0;
+int sum = 0;
 
 class _StudentDashboardState extends State<StudentDashboard> {
-  int work = currentStudent.workingHour;
-  int total = currentStudent.totalHour;
   String perc = '0.00';
   double filler = 0.00;
   Color arc = Colors.red;
@@ -50,7 +51,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
         circularStrokeCap: CircularStrokeCap.round,
         progressColor: arc,
         center: Text(
-          '${currentStudent.workingHour} / ${currentStudent.totalHour}   Hours',
+          '$pres / ${pres + abs}   Hours',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         percent: filler,
@@ -145,7 +146,8 @@ class _StudentDashboardState extends State<StudentDashboard> {
     // TODO: implement initState
     super.initState();
     setState(() {
-      perc = calcPerc(work, total);
+      perc = calcPerc(pres, pres+abs);
+      print("Perc : $perc");
     });
   }
 

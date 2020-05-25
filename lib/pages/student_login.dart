@@ -2,9 +2,11 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cucekified/main.dart';
+import 'package:cucekified/models/attendance.dart';
 import 'package:cucekified/models/student.dart';
 import 'package:cucekified/pages/student_dashboard.dart';
 import 'package:cucekified/pages/teacher_login.dart';
+import 'package:cucekified/pages/view_marked_attendance.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
@@ -16,6 +18,9 @@ class StudentLogin extends StatefulWidget {
 
 Student currentStudent;
 bool isStudAuth = false;
+int abs = 0;
+int pres = 0;
+int total = 0;
 
 class _StudentLoginState extends State<StudentLogin> {
   final emailController = TextEditingController();
@@ -46,6 +51,42 @@ class _StudentLoginState extends State<StudentLogin> {
     if (currentStudent != null &&
         currentStudent.password == p &&
         currentStudent.role == "S") {
+      // calculate number of present and absent
+      markedRef.getDocuments().then((QuerySnapshot snapshot) {
+        snapshot.documents.forEach((DocumentSnapshot doc) {
+          if (doc["hour1"] != 'A' && doc["hour1"] != null) {
+            pres++;
+          } else if (doc["hour1"] == 'A') {
+            abs++;
+          }
+          if (doc["hour2"] != 'A' && doc["hour2"] != null) {
+            pres++;
+          } else if (doc["hour2"] == 'A') {
+            abs++;
+          }
+          if (doc["hour3"] != 'A' && doc["hour3"] != null) {
+            pres++;
+          } else if (doc["hour3"] == 'A') {
+            abs++;
+          }
+          if (doc["hour4"] != 'A' && doc["hour4"] != null) {
+            pres++;
+          } else if (doc["hour4"] == 'A') {
+            abs++;
+          }
+          if (doc["hour5"] != 'A' && doc["hour5"] != null) {
+            pres++;
+          } else if (doc["hour5"] == 'A') {
+            abs++;
+          }
+          if (doc["hour6"] != 'A' &&  doc["hour6"] != null) {
+            pres++;
+          } else if (doc["hour6"] == 'A') {
+            abs++;
+          }
+        });
+      });
+
       // perform login and load student dashboard
       setState(() {
         isStudAuth = true;

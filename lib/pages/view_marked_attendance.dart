@@ -8,6 +8,7 @@ import 'home.dart';
 
 final markedRef =
     attRef.document(currentStudent.regNo).collection('markedAttendance');
+    
 
 bool isCalculating = false;
 // List of Attendance
