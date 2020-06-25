@@ -9,17 +9,21 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'student_login.dart';
 
 class StudentDashboard extends StatefulWidget {
+
+  final int work;
+  final int sum;
+
+  StudentDashboard({this.work, this.sum});
   @override
   _StudentDashboardState createState() => _StudentDashboardState();
 }
 
 final List<Attendance> studentAttendance = [];
-int work = 0;
-int sum = 0;
 
 class _StudentDashboardState extends State<StudentDashboard> {
   String perc = '0.00';
   double filler = 0.00;
+  int a;
   Color arc = Colors.red;
 
   handleLogout() {
@@ -43,6 +47,16 @@ class _StudentDashboardState extends State<StudentDashboard> {
   }
 
   Widget loadCircularAnimator() {
+    if(pres + abs == 0){
+      filler = 0.0; 
+    }else{
+      filler = pres / (pres + abs) ;
+      if(filler > 0.74){
+        arc = Colors.green;
+      }
+      filler = filler * 100;
+      perc = filler.toStringAsFixed(2);
+    }
     return Center(
       child: CircularPercentIndicator(
         radius: 130.0,
@@ -54,7 +68,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
           '$pres / ${pres + abs}   Hours',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        percent: filler,
+        percent: pres + abs ==0 ? 0.0 : pres / (pres + abs) ,
       ),
     );
   }
@@ -125,30 +139,6 @@ class _StudentDashboardState extends State<StudentDashboard> {
         ],
       ),
     );
-  }
-
-  String calcPerc(int a, int b) {
-    if (a == 0 || b == 0) {
-      return "0.00";
-    }
-    double c = a / b;
-    c = c * 100;
-    setState(() {
-      filler = c.ceilToDouble() / 100.0;
-      if (filler > 0.74) arc = Colors.green;
-    });
-    String ab = c.toStringAsFixed(2);
-    return ab;
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    setState(() {
-      perc = calcPerc(pres, pres+abs);
-      print("Perc : $perc");
-    });
   }
 
   @override

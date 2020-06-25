@@ -1,8 +1,7 @@
-// import 'dart:html';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cucekified/main.dart';
-import 'package:cucekified/models/attendance.dart';
 import 'package:cucekified/models/student.dart';
 import 'package:cucekified/pages/student_dashboard.dart';
 import 'package:cucekified/pages/teacher_login.dart';
@@ -18,9 +17,8 @@ class StudentLogin extends StatefulWidget {
 
 Student currentStudent;
 bool isStudAuth = false;
-int abs = 0;
-int pres = 0;
-int total = 0;
+int abs;
+int pres;
 
 class _StudentLoginState extends State<StudentLogin> {
   final emailController = TextEditingController();
@@ -55,37 +53,73 @@ class _StudentLoginState extends State<StudentLogin> {
       markedRef.getDocuments().then((QuerySnapshot snapshot) {
         snapshot.documents.forEach((DocumentSnapshot doc) {
           if (doc["hour1"] != 'A' && doc["hour1"] != null) {
-            pres++;
+            setState(() {
+              pres++;
+            });
           } else if (doc["hour1"] == 'A') {
-            abs++;
+            setState(() {
+              abs++;
+            });
           }
           if (doc["hour2"] != 'A' && doc["hour2"] != null) {
-            pres++;
+            setState(() {
+              pres++;
+            });
           } else if (doc["hour2"] == 'A') {
-            abs++;
+            setState(() {
+              abs++;
+            });
           }
           if (doc["hour3"] != 'A' && doc["hour3"] != null) {
-            pres++;
+            setState(() {
+              pres++;
+            });
           } else if (doc["hour3"] == 'A') {
-            abs++;
+            setState(() {
+              abs++;
+            });
           }
-          if (doc["hour4"] != 'A' && doc["hour4"] != null) {
-            pres++;
+          if (doc["hour4"] != 'sA' && doc["hour4"] != null) {
+            setState(() {
+              pres++;
+            });
           } else if (doc["hour4"] == 'A') {
-            abs++;
+            setState(() {
+              abs++;
+            });
           }
           if (doc["hour5"] != 'A' && doc["hour5"] != null) {
-            pres++;
+            setState(() {
+              pres++;
+            });
           } else if (doc["hour5"] == 'A') {
-            abs++;
+            setState(() {
+              abs++;
+            });
           }
-          if (doc["hour6"] != 'A' &&  doc["hour6"] != null) {
-            pres++;
+          if (doc["hour6"] != 'A' && doc["hour6"] != null) {
+            setState(() {
+              pres++;
+            });
           } else if (doc["hour6"] == 'A') {
-            abs++;
+            setState(() {
+              abs++;
+            });
           }
         });
       });
+      // check if attendance is correct in student's profile
+      // if (currentStudent.totalHour != abs + pres ||
+      //     currentStudent.workingHour != pres) {
+      //   // update in student record
+      //   studRef.document(currentStudent.id).setData(
+      //     {
+      //       "workingHour": pres,
+      //       "totalHour": abs + pres,
+      //     },
+      //     merge: true,
+      //   );
+      // }
 
       // perform login and load student dashboard
       setState(() {
@@ -93,6 +127,8 @@ class _StudentLoginState extends State<StudentLogin> {
         isValidating = false;
       });
       final snackBar = SnackBar(content: Text('Login Successful'));
+      currentStudent.totalHour = pres+abs;
+      currentStudent.workingHour = pres;
       Scaffold.of(context).showSnackBar(snackBar);
     } else {
       setState(() {
@@ -110,6 +146,8 @@ class _StudentLoginState extends State<StudentLogin> {
     super.initState();
     isStudAuth = false;
     isValidating = false;
+    abs =0 ;
+    pres =0;
   }
 
   Widget formLayout() {
@@ -233,7 +271,7 @@ class _StudentLoginState extends State<StudentLogin> {
     return Scaffold(
       appBar: isStudAuth ? null : loginAppBar(),
       key: _scaffoldKey,
-      body: isStudAuth ? StudentDashboard() : loadLoginScreen(),
+      body: isStudAuth ? StudentDashboard(work: pres, sum: pres+abs) : loadLoginScreen(),
     );
   }
 }
