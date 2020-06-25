@@ -108,18 +108,6 @@ class _StudentLoginState extends State<StudentLogin> {
           }
         });
       });
-      // check if attendance is correct in student's profile
-      // if (currentStudent.totalHour != abs + pres ||
-      //     currentStudent.workingHour != pres) {
-      //   // update in student record
-      //   studRef.document(currentStudent.id).setData(
-      //     {
-      //       "workingHour": pres,
-      //       "totalHour": abs + pres,
-      //     },
-      //     merge: true,
-      //   );
-      // }
 
       // perform login and load student dashboard
       setState(() {
@@ -127,8 +115,6 @@ class _StudentLoginState extends State<StudentLogin> {
         isValidating = false;
       });
       final snackBar = SnackBar(content: Text('Login Successful'));
-      currentStudent.totalHour = pres+abs;
-      currentStudent.workingHour = pres;
       Scaffold.of(context).showSnackBar(snackBar);
     } else {
       setState(() {

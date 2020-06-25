@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Student{
-  // name, username, dept, password, gmail, role
+  
   final String username;
   final String dept;
   final String gmail;
